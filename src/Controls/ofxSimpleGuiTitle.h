@@ -12,9 +12,13 @@ public:
 
 	ofxSimpleGuiTitle(string name, float height);
 	void setup();
+
+#ifndef OFXMSAGUI_DONT_USE_XML
 	void loadFromXML(ofxXmlSettings &XML);
 	void saveToXML(ofxXmlSettings &XML);
-	bool getValue();
+#endif
+	
+    bool getValue();
 	void setValue(bool b);
 	void toggle();
 	void setToggleMode(bool b);

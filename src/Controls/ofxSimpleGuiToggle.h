@@ -12,9 +12,13 @@ public:
 	ofxSimpleGuiToggle(string name, bool &value);
 	ofxSimpleGuiToggle& setMomentary(bool m);
 	void setup();
+
+#ifndef OFXMSAGUI_DONT_USE_XML
 	void loadFromXML(ofxXmlSettings &XML);
 	void saveToXML(ofxXmlSettings &XML);
-	bool getValue();
+#endif
+	
+    bool getValue();
 	void setValue(bool b);
 	void toggle();
 	void onPress(int x, int y, int button);

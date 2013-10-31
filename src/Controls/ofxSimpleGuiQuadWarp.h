@@ -16,9 +16,10 @@ public:
 	
 	ofxSimpleGuiQuadWarp(string name, ofBaseDraws &baseDraw, ofPoint *pts);
 	void setup();
+#ifndef OFXMSAGUI_DONT_USE_XML
 	void loadFromXML(ofxXmlSettings &XML);
 	void saveToXML(ofxXmlSettings &XML);
-	
+#endif	
 	void onPress(int x, int y, int button);
 	void onPressOutside(int x, int y, int button);
 	void onDragOver(int x, int y, int button);

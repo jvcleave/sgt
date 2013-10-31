@@ -15,9 +15,11 @@ void ofxSimpleGuiContent::setup() {
 }
 
 void ofxSimpleGuiContent::draw(float x, float y) {
+    if(content == NULL) return;
+    
 	if(content->getWidth() == 0 && content->getHeight() ==0) return;
 	
-	setPos(x, y);
+	setPosition(x, y);
 	setup();
 	
 	glPushMatrix();

@@ -21,8 +21,8 @@ public:
 	//--------------------------------------------------------------------- construct
 	ofxSimpleGuiSliderBase(string name, Type &value, Type min, Type max) : ofxSimpleGuiControl(name) {
 		this->value = &value;
-		this->min	= min;
-		this->max	= max;
+		setMin(min);
+		setMax(max);
 
 		targetValue	= value;
 		oldValue	= targetValue;
@@ -34,32 +34,40 @@ public:
 		setup();
 	}
 
+	void setMin(Type m) {
+		min = m;
+	}
+	
+	void setMax(Type m) {
+		max = m;
+	}
+	
 	void setup() {
 		setSize(config->gridSize.x - config->padding.x, config->sliderHeight + config->sliderTextHeight);
 		pct		 = ofMap((*value), min, max, 0.0, width);
 		barwidth = pct;
 	}
 
+#ifndef OFXMSAGUI_DONT_USE_XML
 	void loadFromXML(ofxXmlSettings &XML) {
 		setValue((Type)XML.getValue(controlType + "_" + key + ":value", 0.0f));
 	}
-	
-	void setSmoothing(float smoothing) {
-		lerpSpeed	= 1.0f - smoothing * 0.9;		// so smoothing :1 still results in some motion!
-	}
-	
-	void setIncrement(Type increment) {
-		this->increment = increment;
-	}
-	
-	
-
+    
 	void saveToXML(ofxXmlSettings &XML) {
 		XML.addTag(controlType + "_" + key);
 		XML.pushTag(controlType + "_" + key);
 		XML.addValue("name", name);
 		XML.addValue("value", getValue());
 		XML.popTag();
+	}
+#endif	
+    
+	void setSmoothing(float smoothing) {
+		lerpSpeed	= 1.0f - smoothing * 0.9;		// so smoothing :1 still results in some motion!
+	}
+	
+	void setIncrement(Type increment) {
+		this->increment = increment;
 	}
 
 
@@ -163,7 +171,7 @@ public:
 //		enabled = true;
 
 		//update postion of gui object
-		setPos(x, y);
+		setPosition(x, y);
 
 		//VALUE CLAMP
 		barwidth = ofMap((*value), min, max, 0.0, (float)width);

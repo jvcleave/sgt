@@ -1,38 +1,3 @@
-/***********************************************************************
-
- Copyright (c) 2008, 2009, 2010, Memo Akten, www.memo.tv
- *** The Mega Super Awesome Visuals Company ***
- * All rights reserved.
-
- based on Todd Vanderlin's ofxSimpleGui API
- http://toddvanderlin.com/
-
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- *     * Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
- *     * Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of MSA Visuals nor the names of its contributors
- *       may be used to endorse or promote products derived from this software
- *       without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
- * OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
- * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
- * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * ***********************************************************************/
-
 #include "ofxSimpleGuiToo.h"
 
 ofxSimpleGuiToo gui;
@@ -64,41 +29,49 @@ void ofxSimpleGuiToo::setup() {
 	setAlignRight(false);
 	setDraw(false);
 	setPage(1);
+	autoHeight();
 	
-	ofAddListener(ofEvents.keyPressed, this, &ofxSimpleGuiToo::keyPressed);
+	ofAddListener(ofEvents().keyPressed, this, &ofxSimpleGuiToo::keyPressed);
+}
+
+void ofxSimpleGuiToo::setForceHeight(int h) {
+	forceHeight = h;
+}
+
+void ofxSimpleGuiToo::autoHeight() {
+	forceHeight = 0;
 }
 
 
-
 void ofxSimpleGuiToo::addListeners() {
-//	ofAddListener(ofEvents.setup, this, &ofxSimpleGuiToo::setup);
-	ofAddListener(ofEvents.update, this, &ofxSimpleGuiToo::update);
-//	ofAddListener(ofEvents.draw, this, &ofxSimpleGuiToo::draw);
-//	ofAddListener(ofEvents.exit, this, &ofxSimpleGuiToo::exit);
+//	ofAddListener(ofEvents().setup, this, &ofxSimpleGuiToo::setup);
+	ofAddListener(ofEvents().update, this, &ofxSimpleGuiToo::update);
+//	ofAddListener(ofEvents().draw, this, &ofxSimpleGuiToo::draw);
+//	ofAddListener(ofEvents().exit, this, &ofxSimpleGuiToo::exit);
 
-	ofAddListener(ofEvents.mousePressed, this, &ofxSimpleGuiToo::mousePressed);
-	ofAddListener(ofEvents.mouseMoved, this, &ofxSimpleGuiToo::mouseMoved);
-	ofAddListener(ofEvents.mouseDragged, this, &ofxSimpleGuiToo::mouseDragged);
-	ofAddListener(ofEvents.mouseReleased, this, &ofxSimpleGuiToo::mouseReleased);
+	ofAddListener(ofEvents().mousePressed, this, &ofxSimpleGuiToo::mousePressed);
+	ofAddListener(ofEvents().mouseMoved, this, &ofxSimpleGuiToo::mouseMoved);
+	ofAddListener(ofEvents().mouseDragged, this, &ofxSimpleGuiToo::mouseDragged);
+	ofAddListener(ofEvents().mouseReleased, this, &ofxSimpleGuiToo::mouseReleased);
 
-//	ofAddListener(ofEvents.keyPressed, this, &ofxSimpleGuiToo::keyPressed);
-	ofAddListener(ofEvents.keyReleased, this, &ofxSimpleGuiToo::keyReleased);
+//	ofAddListener(ofEvents().keyPressed, this, &ofxSimpleGuiToo::keyPressed);
+	ofAddListener(ofEvents().keyReleased, this, &ofxSimpleGuiToo::keyReleased);
 }
 
 
 void ofxSimpleGuiToo::removeListeners() {
-//	ofRemoveListener(ofEvents.setup, this, &ofxSimpleGuiToo::setup);
-	ofRemoveListener(ofEvents.update, this, &ofxSimpleGuiToo::update);
-//	ofRemoveListener(ofEvents.draw, this, &ofxSimpleGuiToo::draw);
-//	ofRemoveListener(ofEvents.exit, this, &ofxSimpleGuiToo::exit);
+//	ofRemoveListener(ofEvents().setup, this, &ofxSimpleGuiToo::setup);
+	ofRemoveListener(ofEvents().update, this, &ofxSimpleGuiToo::update);
+//	ofRemoveListener(ofEvents().draw, this, &ofxSimpleGuiToo::draw);
+//	ofRemoveListener(ofEvents().exit, this, &ofxSimpleGuiToo::exit);
 
-	ofRemoveListener(ofEvents.mousePressed, this, &ofxSimpleGuiToo::mousePressed);
-	ofRemoveListener(ofEvents.mouseMoved, this, &ofxSimpleGuiToo::mouseMoved);
-	ofRemoveListener(ofEvents.mouseDragged, this, &ofxSimpleGuiToo::mouseDragged);
-	ofRemoveListener(ofEvents.mouseReleased, this, &ofxSimpleGuiToo::mouseReleased);
+	ofRemoveListener(ofEvents().mousePressed, this, &ofxSimpleGuiToo::mousePressed);
+	ofRemoveListener(ofEvents().mouseMoved, this, &ofxSimpleGuiToo::mouseMoved);
+	ofRemoveListener(ofEvents().mouseDragged, this, &ofxSimpleGuiToo::mouseDragged);
+	ofRemoveListener(ofEvents().mouseReleased, this, &ofxSimpleGuiToo::mouseReleased);
 
-//	ofRemoveListener(ofEvents.keyPressed, this, &ofxSimpleGuiToo::keyPressed);
-	ofRemoveListener(ofEvents.keyReleased, this, &ofxSimpleGuiToo::keyReleased);
+//	ofRemoveListener(ofEvents().keyPressed, this, &ofxSimpleGuiToo::keyPressed);
+	ofRemoveListener(ofEvents().keyReleased, this, &ofxSimpleGuiToo::keyReleased);
 }
 
 void ofxSimpleGuiToo::setDraw(bool b) {
@@ -332,15 +305,19 @@ ofxSimpleGuiToggle &ofxSimpleGuiToo::addToggle(string name, bool &value) {
 }
 
 
-ofxSimpleGuiColorPicker &ofxSimpleGuiToo::addColorPicker(string name, float *values) {
+ofxSimpleGuiColorPicker &ofxSimpleGuiToo::addColorPicker(string name, ofFloatColor& color) {
 	if(!config) setup();
-	return pages[currentPageIndex]->addColorPicker(name, values);
+	return pages[currentPageIndex]->addColorPicker(name, color);
 }
 
 
 ofxSimpleGuiComboBox &ofxSimpleGuiToo::addComboBox(string name, int &value, int numChoices, string* choiceTitles)  {
 	if(!config) setup();
 	return pages[currentPageIndex]->addComboBox(name, value, numChoices, choiceTitles);
+}
+
+ofxSimpleGuiComboBox &ofxSimpleGuiToo::addComboBox(string name, int &value, vector<string>& choiceTitles) {
+    return addComboBox(name, value, choiceTitles.size(), &choiceTitles[0]);
 }
 
 
@@ -352,7 +329,11 @@ void ofxSimpleGuiToo::update(ofEventArgs &e) {
 	}
 
 	headerPage->update(e);
-	pages[currentPageIndex]->height = ofGetHeight();
+	if(forceHeight) {
+		pages[currentPageIndex]->height = forceHeight;
+	} else {
+		pages[currentPageIndex]->height = ofGetHeight();
+	}
 	pages[currentPageIndex]->update(e);
 
 

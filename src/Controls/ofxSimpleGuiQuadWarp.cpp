@@ -7,8 +7,8 @@
 ofxSimpleGuiQuadWarp::ofxSimpleGuiQuadWarp(string name, ofBaseDraws &baseDraw, ofPoint *pts) : ofxSimpleGuiControl(name) {
 	this->baseDraw = &baseDraw;
 	
-	setPos(0, 0);
-	setSize(baseDraw.getWidth(), baseDraw.getHeight());
+	setPosition(0, 0);
+//	setSize(baseDraw.getWidth(), baseDraw.getHeight()); 
 	
 	curPoint	= NULL;
 	this->pts = pts;
@@ -24,6 +24,7 @@ void ofxSimpleGuiQuadWarp::setup() {
 }
 
 
+#ifndef OFXMSAGUI_DONT_USE_XML
 void ofxSimpleGuiQuadWarp::loadFromXML(ofxXmlSettings &XML) {
 	for(int i=0; i<4; i++) {
 		pts[i].x = XML.getValue(controlType + "_" + key + ":values_" + ofToString(i) + "_x", 0.0f);
@@ -41,7 +42,7 @@ void ofxSimpleGuiQuadWarp::saveToXML(ofxXmlSettings &XML) {
 	}
 	XML.popTag();
 }
-
+#endif
 
 
 //---------------------------------------------------------------------
@@ -94,7 +95,7 @@ void ofxSimpleGuiQuadWarp::onDragOutside(int x, int y, int button) {
 
 //---------------------------------------------------------------------
 void ofxSimpleGuiQuadWarp::draw(float x, float y) {
-	setPos(x, y);
+	setPosition(x, y);
 	glPushMatrix();
 	glTranslatef(x, y, 0);
 	glColor3f(1, 1, 1);

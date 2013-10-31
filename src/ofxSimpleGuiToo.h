@@ -36,7 +36,10 @@
 #pragma once
 
 #include "ofMain.h"
+
+#ifndef OFXMSAGUI_DONT_USE_XML
 #include "ofxXmlSettings.h"
+#endif
 
 #include "ofxSimpleGuiIncludes.h"
 
@@ -74,6 +77,8 @@ public:
 	void						prevPage();
 	void						setPage(int i);				// 1 based index of page
 	void						setPage(string name);
+	void						setForceHeight(int h);
+	void						autoHeight();
 	
 	void						nextPageWithBlank();		// cycles through pages, and closes after last page
 	
@@ -97,8 +102,9 @@ public:
 	ofxSimpleGuiSlider2d		&addSlider2d(string name, ofPoint& value, float xmin, float xmax, float ymin, float ymax);
 	ofxSimpleGuiTitle			&addTitle(string name="", float height = 0);
 	ofxSimpleGuiToggle			&addToggle(string name, bool &value);
-	ofxSimpleGuiColorPicker		&addColorPicker(string name, float *values);
+	ofxSimpleGuiColorPicker		&addColorPicker(string name, ofFloatColor& color);
 	ofxSimpleGuiComboBox        &addComboBox(string name, int &value, int numChoices, string* choiceTitles=NULL);
+    ofxSimpleGuiComboBox        &addComboBox(string name, int &value, vector<string>& choiceTitles);
 	
 	
 	void						draw();
@@ -109,10 +115,8 @@ protected:
 	bool							doDefaultKeys;
 	bool							doSave;//, doSaveBackup;
 	bool							changePage;
+	int								forceHeight;
 	int								currentPageIndex;			// 1 based index of page (0 is for global controls)
-	
-	//	ofxXmlSettings					XML;
-	//	string							xmlFilename;
 	
 	bool							doDraw;
 	float							border;

@@ -11,9 +11,12 @@ public:
 	ofxSimpleGuiButton(string name, bool &value);	
 	void setup();
 	
+#ifndef OFXMSAGUI_DONT_USE_XML
 	void loadFromXML(ofxXmlSettings &XML);	
 	void saveToXML(ofxXmlSettings &XML);
-	void keyPressed( int key );
+#endif
+	
+    void keyPressed( int key );
 
 	bool getValue();
 	void setValue(bool b);

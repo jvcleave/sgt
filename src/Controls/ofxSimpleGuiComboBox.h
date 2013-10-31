@@ -22,8 +22,10 @@ public:
 	virtual ~ofxSimpleGuiComboBox();
 	
 	void setup();
+#ifndef OFXMSAGUI_DONT_USE_XML
 	void loadFromXML(ofxXmlSettings &XML);
 	void saveToXML(ofxXmlSettings &XML);
+#endif
 	void keyPressed( int key );
 	void onPress(int x, int y, int button);
 	void onRelease(int x, int y, int button);
@@ -68,8 +70,7 @@ public:
 	virtual void onDragOutside(int x, int y, int button);
 	
 	virtual bool hitTest(int tx, int ty);
-	//JVC
-	vector<string> getChoices();
+	
 protected:
 	void setCBTextColor();
 	void setCBTextBGColor();

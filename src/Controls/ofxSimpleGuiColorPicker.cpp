@@ -9,8 +9,8 @@
 
 #include "ofxSimpleGuiColorPicker.h"
 
-ofxSimpleGuiColorPicker::ofxSimpleGuiColorPicker(string name, float* value, float max) : ofxSimpleGuiControl(name) {
-	this->value = value;
+ofxSimpleGuiColorPicker::ofxSimpleGuiColorPicker(string name, ofFloatColor& color, float max) : ofxSimpleGuiControl(name) {
+	this->value = &color;
 	this->min	= 0;
 	this->max	= max;
 	
@@ -26,6 +26,7 @@ void ofxSimpleGuiColorPicker::setup() {
 	}
 }
 
+#ifndef OFXMSAGUI_DONT_USE_XML
 void ofxSimpleGuiColorPicker::loadFromXML(ofxXmlSettings &XML) {
 	for(int i=0; i<4; i++) {
 		setValue(XML.getValue(controlType + "_" + key + ":values_" + ofToString(i), 0.0f), i);
@@ -41,18 +42,18 @@ void ofxSimpleGuiColorPicker::saveToXML(ofxXmlSettings &XML) {
 	}
 	XML.popTag();
 }
-
+#endif
 
 
 float ofxSimpleGuiColorPicker::getValue(int i) {
-	return (value)[i];
+	return value->v[i];
 }
 
 
 void ofxSimpleGuiColorPicker::setValue(float f, int i) {
 	if(f < min) f = min;
 	else if(f > max) f = max;
-	(value)[i] = f;
+	value->v[i] = f;
 }
 
 
@@ -102,7 +103,7 @@ void ofxSimpleGuiColorPicker::draw(float x, float y) {
 //	enabled = true;
 	
 	//update postion of gui object
-	setPos(x, y);
+	setPosition(x, y);
 	glPushMatrix();
 	glTranslatef(x, y, 0);
 	

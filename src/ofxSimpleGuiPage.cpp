@@ -1,39 +1,3 @@
-/***********************************************************************
- 
- Copyright (c) 2008, 2009, 2010, Memo Akten, www.memo.tv
- *** The Mega Super Awesome Visuals Company ***
- * All rights reserved.
- 
- based on Todd Vanderlin's ofxSimpleGui API
- http://toddvanderlin.com/
- 
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- *     * Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
- *     * Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of MSA Visuals nor the names of its contributors
- *       may be used to endorse or promote products derived from this software
- *       without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
- * OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
- * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
- * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * ***********************************************************************/
-
-
 #include "ofxSimpleGuiPage.h"
 
 ofxSimpleGuiPage::ofxSimpleGuiPage(string name) : ofxSimpleGuiControl(name) {
@@ -57,6 +21,7 @@ ofxSimpleGuiPage &ofxSimpleGuiPage::setXMLName(string s) {
 
 void ofxSimpleGuiPage::loadFromXML() {
 	ofLog(OF_LOG_VERBOSE, "ofxSimpleGuiPage::loadFromXML: " + xmlFilename);
+#ifndef OFXMSAGUI_DONT_USE_XML
 	
 	if(xmlFilename.compare("") == 0) return;
 
@@ -70,14 +35,14 @@ void ofxSimpleGuiPage::loadFromXML() {
 		controls[i]->loadFromXML(XML);
 	}
 	XML.popTag();
+#endif    
 }
 
 
 void ofxSimpleGuiPage::saveToXML() {
 	if(controls.size() <= 1 || xmlFilename.compare("") == 0) return;	// if it has no controls (title counts as one control)
 	
-	XML.saveFile(xmlFilename + ".bak");
-	
+#ifndef OFXMSAGUI_DONT_USE_XML
 	XML.clear();	// clear cause we are building a new xml file
 	
 	XML.addTag("controls");
@@ -90,6 +55,7 @@ void ofxSimpleGuiPage::saveToXML() {
 	XML.saveFile(xmlFilename);
 	//	if(doSaveBackup) 
 	ofLog(OF_LOG_VERBOSE, "ofxSimpleGuiPage::saveToXML: " + xmlFilename + " " + ofToString(controls.size(), 0) + " items");
+#endif    
 }
 
 
@@ -101,7 +67,7 @@ float ofxSimpleGuiPage::getNextY(float y) {
 
 
 void ofxSimpleGuiPage::draw(float x, float y, bool alignRight) {
-	setPos(x += config->offset.x, y += config->offset.y);
+	setPosition(x += config->offset.x, y += config->offset.y);
 	if(alignRight) x = ofGetWidth() - x -  config->gridSize.x;
 	
 	float posX		= 0;
@@ -209,8 +175,8 @@ ofxSimpleGuiToggle &ofxSimpleGuiPage::addToggle(string name, bool &value) {
 	return (ofxSimpleGuiToggle &)addControl(* new ofxSimpleGuiToggle(name, value));
 }
 
-ofxSimpleGuiColorPicker &ofxSimpleGuiPage::addColorPicker(string name, float *values) {
-	return (ofxSimpleGuiColorPicker &)addControl(* new ofxSimpleGuiColorPicker(name, values));
+ofxSimpleGuiColorPicker &ofxSimpleGuiPage::addColorPicker(string name, ofFloatColor& color) {
+	return (ofxSimpleGuiColorPicker &)addControl(* new ofxSimpleGuiColorPicker(name, color));
 }
 
 

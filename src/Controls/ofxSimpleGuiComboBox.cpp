@@ -85,6 +85,7 @@ void ofxSimpleGuiComboBox::setup() {
 	setSize(config->gridSize.x - config->padding.x, config->comboBoxHeight);
 }
 
+#ifndef OFXMSAGUI_DONT_USE_XML
 void ofxSimpleGuiComboBox::loadFromXML(ofxXmlSettings &XML) {
 	setValue(XML.getValue(controlType + "_" + key + ":value", 0));
 }
@@ -96,6 +97,7 @@ void ofxSimpleGuiComboBox::saveToXML(ofxXmlSettings &XML) {
 	XML.addValue("value", getValue());
 	XML.popTag();
 }
+#endif
 
 void ofxSimpleGuiComboBox::keyPressed( int key ) {
 }
@@ -105,7 +107,6 @@ int ofxSimpleGuiComboBox::getValue() {
 }
 
 void ofxSimpleGuiComboBox::setValue(int index) {
-	cout << "ofxSimpleGuiComboBox setValue" << index << endl;
 	m_selectedChoice = ofClamp(index, 0, m_choices.size());
 }
 
@@ -202,10 +203,7 @@ void ofxSimpleGuiComboBox::setCBTextBGColor() {
 	else ofSetHexColor(config->textBGColor);
 }
 
-vector<string> ofxSimpleGuiComboBox::getChoices()
-{
-	return m_choices;
-}
+
 #define kSGCBTriangleWidth   10
 #define KSGCBTrianglePadding 5
 #define kSGCBTextPaddingX    3
@@ -214,7 +212,7 @@ void ofxSimpleGuiComboBox::draw(float x, float y) {
 	//we assume a max of 256 characters.
 	char choiceBuf[256];
 	
-	setPos(x, y);
+	setPosition(x, y);
 	
 	glPushMatrix();
 	glTranslatef(x, y, 0);
@@ -227,7 +225,7 @@ void ofxSimpleGuiComboBox::draw(float x, float y) {
 	setTextColor();
 //	sprintf(choiceBuf, "%s: %s", m_title, m_choices.size() ? m_choices[m_selectedChoice] : "(No Choices Available)");
 	
-	ofDrawBitmapString(m_title + "\n\n" + (m_choices.size() ? m_choices[m_selectedChoice] : "N/A"), kSGCBTextPaddingX, kSGCBTextPaddingY);
+	ofDrawBitmapString(m_title + "\n" + (m_choices.size() ? m_choices[m_selectedChoice] : "N/A"), kSGCBTextPaddingX, kSGCBTextPaddingY);
 	//draw a combobox down triangle icon so the users know to click
 	ofTriangle(width - (kSGCBTriangleWidth + KSGCBTrianglePadding), kSGCBTextPaddingY/2,
 			   width - (KSGCBTrianglePadding), kSGCBTextPaddingY/2,

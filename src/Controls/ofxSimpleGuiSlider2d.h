@@ -10,8 +10,10 @@ public:
 
 	ofxSimpleGuiSlider2d(string name, ofPoint& value, float xmin, float xmax, float ymin, float ymax);
 	void setup();
+#ifndef OFXMSAGUI_DONT_USE_XML
 	void loadFromXML(ofxXmlSettings &XML);
 	void saveToXML(ofxXmlSettings &XML);
+#endif
 	void setValue(float x, float y);
 	void setMin(float x, float y);
 	void setMax(float x, float y);

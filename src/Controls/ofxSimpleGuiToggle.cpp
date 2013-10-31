@@ -19,6 +19,7 @@ void ofxSimpleGuiToggle::setup() {
 	setSize(config->gridSize.x - config->padding.x, config->toggleHeight);
 }
 
+#ifndef OFXMSAGUI_DONT_USE_XML
 void ofxSimpleGuiToggle::loadFromXML(ofxXmlSettings &XML) {
 	setValue(XML.getValue(controlType + "_" + key + ":value", 0));
 }
@@ -30,7 +31,7 @@ void ofxSimpleGuiToggle::saveToXML(ofxXmlSettings &XML) {
 	XML.addValue("value", getValue());
 	XML.popTag();
 }
-
+#endif
 
 bool ofxSimpleGuiToggle::getValue() {
 	return (*value);
@@ -72,7 +73,7 @@ void ofxSimpleGuiToggle::update() {
 
 void ofxSimpleGuiToggle::draw(float x, float y) {
 //	enabled = true;
-	setPos(x, y);
+	setPosition(x, y);
 	
 	glPushMatrix();
 	glTranslatef(x, y, 0);

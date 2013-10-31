@@ -13,6 +13,7 @@ void ofxSimpleGuiButton::setup() {
 	setSize(config->gridSize.x - config->padding.x, config->buttonHeight);
 }
 
+#ifndef OFXMSAGUI_DONT_USE_XML
 void ofxSimpleGuiButton::loadFromXML(ofxXmlSettings &XML) {
 	setValue(XML.getValue(controlType + "_" + key + ":value", 0));
 }
@@ -24,6 +25,7 @@ void ofxSimpleGuiButton::saveToXML(ofxXmlSettings &XML) {
 	XML.addValue("value", getValue());
 	XML.popTag();
 }
+#endif
 
 void ofxSimpleGuiButton::keyPressed( int key ) {
 	if(key==keyboardShortcut) toggle();
@@ -58,7 +60,7 @@ void ofxSimpleGuiButton::onRelease(int x, int y, int button) {
 }
 
 void ofxSimpleGuiButton::draw(float x, float y) {
-	setPos(x, y);
+	setPosition(x, y);
 	
 	glPushMatrix();
 	glTranslatef(x, y, 0);

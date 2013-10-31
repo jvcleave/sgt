@@ -18,6 +18,7 @@ ofxSimpleGuiTitle::ofxSimpleGuiTitle(string name, float height) : ofxSimpleGuiCo
 void ofxSimpleGuiTitle::setup() {
 }
 
+#ifndef OFXMSAGUI_DONT_USE_XML
 void ofxSimpleGuiTitle::loadFromXML(ofxXmlSettings &XML) {
 	if(!value) return;
 	setValue(XML.getValue(controlType + "_" + key + ":value", 0));
@@ -31,7 +32,7 @@ void ofxSimpleGuiTitle::saveToXML(ofxXmlSettings &XML) {
 	XML.addValue("value", getValue());
 	XML.popTag();
 }
-
+#endif
 
 bool ofxSimpleGuiTitle::getValue() {
 	if(!value) return false;
@@ -64,7 +65,7 @@ void ofxSimpleGuiTitle::onRelease(int x, int y, int button) {
 }
 
 void ofxSimpleGuiTitle::draw(float x, float y) {
-	setPos(x, y);
+	setPosition(x, y);
 	
 	if(hasTitle == false) return;
 	

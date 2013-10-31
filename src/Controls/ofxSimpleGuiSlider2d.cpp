@@ -16,6 +16,7 @@ void ofxSimpleGuiSlider2d::setup() {
 	point.y = ofMap((*value).y, min.y, max.y, y, y+height-config->slider2DTextHeight);
 }
 
+#ifndef OFXMSAGUI_DONT_USE_XML
 void ofxSimpleGuiSlider2d::loadFromXML(ofxXmlSettings &XML) {
 	value->set(XML.getValue(controlType + "_" + key + ":valueX", 0.0f), XML.getValue(controlType + "_" + key + ":valueY", 0.0f));
 }
@@ -29,7 +30,7 @@ void ofxSimpleGuiSlider2d::saveToXML(ofxXmlSettings &XML) {
 	XML.addValue("valueY", value->y);
 	XML.popTag();
 }
-
+#endif
 
 void ofxSimpleGuiSlider2d::setValue(float x, float y) {
 	(*value).x = x;
@@ -81,7 +82,7 @@ void ofxSimpleGuiSlider2d::update() {
 }
 
 void ofxSimpleGuiSlider2d::draw(float x, float y) {
-	setPos(x, y);
+	setPosition(x, y);
 	ofPoint	pointv;
 	pointv.x = ofMap((*value).x, min.x, max.x, x, x+width);
 	pointv.y = ofMap((*value).y, min.y, max.y, y, y+height-config->slider2DTextHeight);
